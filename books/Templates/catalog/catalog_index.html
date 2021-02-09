@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    <a href="{% url 'catalog:add' %}"> Add </a>
+    <table>
+        <thead>
+            <th>Counter</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Publishing_house</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+        {% for item in all_books %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td> {{ item.title }}</td>
+            <td> {{ item.author }}</td>
+            <td> {{ item.category}}</td>
+            <td> {{ item.publishing_house}}</td>
+            <td> <a href="{% url 'catalog:change' item.id %}"> Edit</a> </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
