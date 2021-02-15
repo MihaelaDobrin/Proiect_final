@@ -34,7 +34,7 @@
 
                     {% if request.user.is_authenticated == True %}
                     <li  class="nav-item">
-                        <p>{{ request.user.username }}</p>
+                        <a href="{% url 'userprofile:update_profile' request.user.id %}" class="nav-link" style="color:blue">{{request.user.first_name}} </a>
                     </li>
                     {% endif %}
                     {% if request.user.is_authenticated == False %}
@@ -44,6 +44,11 @@
                         </a>
                     </li>
                     {%  endif %}
+                    <li class="nav-item">
+                        <a href="{% url 'userprofile:new_account' %}" class="nav-link">
+                            Sign Up
+                        </a>
+                    </li>
                     {% if request.user.is_authenticated == True %}
                     <li class="nav-item">
                         <a href="{% url 'logout' %}" class="nav-link">
@@ -51,6 +56,8 @@
                         </a>
                     </li>
                     {%  endif %}
+
+
             </ul>
         </div>
     </div>

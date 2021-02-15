@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <a href="{% url 'catalog:add' %}"> Add </a>
+{% if request.user.is_authenticated == True %}
+    <form action="{% url 'catalog:search' %}" method="get">
+    <input name="q" type="text" placeholder="Search">
+    </form>
+    <a href="{% url 'catalog:add' %}" class="btn btn-danger"> Add </a>
+{% endif %}
+
     <table>
         <thead>
             <th>Counter</th>
@@ -8,7 +14,10 @@
             <th>Author</th>
             <th>Category</th>
             <th>Publishing_house</th>
-            <th>Actions</th>
+            {% if request.user.is_authenticated == True %}
+                <th>Actions</th>
+            {% endif %}
+
         </thead>
         <tbody>
         {% for item in all_books %}
@@ -18,9 +27,13 @@
             <td> {{ item.author }}</td>
             <td> {{ item.category}}</td>
             <td> {{ item.publishing_house}}</td>
-            <td> <a href="{% url 'catalog:change' item.id %}"> Edit</a> </td>
+            {% if request.user.is_authenticated == True %}
+                <td> <a href="{% url 'catalog:change' item.id %}"> Edit</a> </td>
+                <td> <a href="{% url 'catalog:add_read' item.id request.user.id %}"> Add to list </a> </td>
+            {% endif %}
         </tr>
         {% endfor %}
         </tbody>
     </table>
+
 {% endblock %}
