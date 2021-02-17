@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load check_books %}
 {% block content %}
 {% if request.user.is_authenticated == True %}
     <form action="{% url 'catalog:search' %}" method="get">
@@ -29,7 +30,15 @@
             <td> {{ item.publishing_house}}</td>
             {% if request.user.is_authenticated == True %}
                 <td> <a href="{% url 'catalog:change' item.id %}"> Edit</a> </td>
-                <td> <a href="{% url 'catalog:add_read' item.id request.user.id %}"> Add to list </a> </td>
+                <td>
+                    {% if item.id|check_books:request.user.id is False%}
+                    <a href="{% url 'catalog:add_read' item.id %}"> Add to list </a>
+                    {% else %}
+                       <a href="#" class="disabled" > Add to list </a>
+                    {% endif %}
+                </td>
+                <td> <a href="{% url 'catalog:list_comments' %}"> Show comments  </a> </td>
+                <td> <a href="{% url 'catalog:add_comments' item.id %}"> Add a comment  </a> </td>
             {% endif %}
         </tr>
         {% endfor %}

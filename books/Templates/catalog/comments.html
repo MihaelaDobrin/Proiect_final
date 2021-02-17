@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<ul>
+    {% for item in all_comments %}
+        <li>
+            {{ item.comment_added}} by {{ item.user.username }}
+        </li>
+    {% endfor %}
+    <a> Add a comment </a>
+
+</ul>
+{% endblock %}

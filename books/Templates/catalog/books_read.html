@@ -3,7 +3,7 @@
 <ul>
     {% for item in books_read %}
         <li>
-            {{ item.title }} by {{ item.author }}
+            {{ item.book.title }} by {{ item.book.author }}
         </li>
     {% endfor %}
 </ul>

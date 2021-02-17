@@ -31,6 +31,11 @@
                             Books
                         </a>
                     </li>
+                   <li class="nav-item">
+                        <a href="{% url 'catalog:read'%}" class="nav-link" style="color:black">
+                            Books read
+                        </a>
+                    </li>
 
                     {% if request.user.is_authenticated == True %}
                     <li  class="nav-item">

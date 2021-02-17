@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import TextInput, Select
 
-from catalog.models import Book
+from catalog.models import Book, Comments
 
 
 class BooksForm(forms.ModelForm):
@@ -34,6 +34,22 @@ class BooksForm(forms.ModelForm):
                 self.errors['title']=self.error_class([msg])
 
         return cleaned_data
+
+
+class CommentsForm(forms.ModelForm):
+
+    class Meta:
+        model = Comments
+        fields = ['comment_added', 'rating']
+
+        widgets = {
+            'comment_added': TextInput(attrs={'placeholder': 'Content of comment', 'class': 'form-control'}),
+            'rating': Select(attrs={'placeholder': 'Stars', 'class': 'form-control'}),
+        }
+
+    def __init__(self, pk, *args, **kwargs):
+        super(CommentsForm, self).__init__(*args, **kwargs)
+        self.pk = pk
 
 
 
