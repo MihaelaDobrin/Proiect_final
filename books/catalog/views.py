@@ -81,37 +81,38 @@ class ShowComments(LoginRequiredMixin, ListView):
     #     book_comments = Comments.objects.filter(book_id=book_instance_id)
     #     return book_comments
 
-# class AddComment(LoginRequiredMixin, CreateView):
-#     model = Comments
-#     form_class = CommentsForm
-#     template_name = 'catalog/comment_form.html'
-#
-#     def get_form_kwargs(self):
-#         kwargs = super(AddComment, self).get_form_kwargs()
-#         kwargs.update({'pk':None})
-#         return kwargs
+class AddComment(LoginRequiredMixin, CreateView):
+    model = Comments
+    form_class = CommentsForm
+    template_name = 'catalog/comment_form.html'
 
-class CommentForm(object):
-    pass
+    def get_form_kwargs(self):
+        kwargs = super(AddComment, self).get_form_kwargs()
+        kwargs.update({'pk':None})
+        return kwargs
 
 
-@login_required
-def add_comment(request, id):
-    if request.method == 'POST':
-        cf = CommentForm(request.POST)
-        if cf.is_valid():
-            content = request.POST.get('comment_added')
-            rate = request.POST.get('rating')
-            comment = Comments.objects.create(comment_added=content, rating=rate, user_id=request.user.id, book_id=id)
-            comment.save()
-            return redirect('catalog:home')
-        else:
-            cf = CommentForm()
 
-        context = {
-            'comment_form': cf,
-        }
-        return context
+# @login_required
+# def add_comment(request, pk):
+#     if request.method == 'POST':
+#         cf = CommentsForm(request.POST)
+#         if cf.is_valid():
+#             content = request.POST.get('comment_added')
+#             rate = request.POST.get('rating')
+#             instance_comment = Comments()
+#             instance_comment.comment_added = content
+#             instance_comment.rating = rate
+#             instance_comment.user_id = request.user.id
+#             instance_comment.book_id = pk
+#             instance_comment.save()
+#             return redirect('catalog:home')
+#         else:
+#             cf = CommentsForm()
+#         context = {
+#             'comment_form': cf,
+#         }
+#         return context
 
 
 

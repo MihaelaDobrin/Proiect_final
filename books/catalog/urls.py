@@ -12,6 +12,6 @@ urlpatterns =[
     path('book_read/', views.ListBookRead.as_view(), name='read'),
     path('add_book_read/<int:pk>', views.createBookRead, name='add_read'),
     path('comments/', views.ShowComments.as_view(), name='list_comments'),
-    path('add_new_comment/<int:pk>/', views.add_comment, name='add_comments'),
+    path('add_new_comment/<int:pk>/', views.AddComment.as_view(), name='add_comments'),
 
 ]
