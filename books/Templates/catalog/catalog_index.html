@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 {% load check_books %}
 {% block content %}
+{% load static %}
 {% if request.user.is_authenticated == True %}
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
     <form action="{% url 'catalog:search' %}" method="get">
     <input name="q" type="text" placeholder="Search">
     </form>
+</nav>
     <a href="{% url 'catalog:add' %}" class="btn btn-danger"> Add </a>
+
 {% endif %}
 
-    <table>
+<table class="table table-hover table-bordered">
         <thead>
-            <th>Counter</th>
+            <th></th>
             <th>Title</th>
             <th>Author</th>
             <th>Category</th>
@@ -23,7 +27,7 @@
         <tbody>
         {% for item in all_books %}
         <tr>
-            <td>{{ forloop.counter }}</td>
+            <td>{{ forloop.counter }}.</td>
             <td> {{ item.title }}</td>
             <td> {{ item.author }}</td>
             <td> {{ item.category}}</td>
@@ -34,15 +38,15 @@
                     {% if item.id|check_books:request.user.id is False%}
                     <a href="{% url 'catalog:add_read' item.id %}"> Add to list </a>
                     {% else %}
-                       <a href="#" class="disabled" > Add to list </a>
+                       <a href="#" class="nav-link disabled" > Already added </a>
                     {% endif %}
                 </td>
-                <td> <a href="{% url 'catalog:list_comments' %}"> Show comments  </a> </td>
-                <td> <a href="{% url 'catalog:add_comments' item.id %}"> Add a comment  </a> </td>
+                <td> <a href="{% url 'catalog:list_comments'%}?id_book={{ item.id }}"> Comments  </a> </td>
+                <td> <a href="{% url 'catalog:add_comments'%}?id_book={{ item.id }}"> Add a comment  </a> </td>
             {% endif %}
         </tr>
         {% endfor %}
         </tbody>
     </table>
-
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 {% endblock %}

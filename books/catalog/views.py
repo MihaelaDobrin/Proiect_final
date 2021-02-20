@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.http import request
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -9,6 +10,7 @@ from django.views.generic import ListView, CreateView, UpdateView
 
 from catalog.forms import BooksForm, CommentsForm
 from catalog.models import Book, Book_read, Comments
+import pandas as pd
 
 
 class HomeIndex(ListView):
@@ -24,7 +26,7 @@ class CreateBookIndexView(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super(CreateBookIndexView, self).get_form_kwargs()
-        kwargs.update({'pk':None})
+        kwargs.update({'pk': None})
         return kwargs
 
     def get_success_url(self):
@@ -76,10 +78,11 @@ class ShowComments(LoginRequiredMixin, ListView):
     template_name = 'catalog/comments.html'
     context_object_name = 'all_comments'
 
-    # def get_queryset(self):
-    #     book_instance_id = str(self.request.GET.get('id_book')).split('-')[-1]
-    #     book_comments = Comments.objects.filter(book_id=book_instance_id)
-    #     return book_comments
+    def get_context_data(self, **kwargs):
+        context = super(ShowComments, self).get_context_data(**kwargs)
+        context['all_comments'] = Comments.objects.filter(book_id=self.request.GET.get('id_book'))
+        return context
+
 
 class AddComment(LoginRequiredMixin, CreateView):
     model = Comments
@@ -89,33 +92,16 @@ class AddComment(LoginRequiredMixin, CreateView):
     def get_form_kwargs(self):
         kwargs = super(AddComment, self).get_form_kwargs()
         kwargs.update({'pk':None})
+        kwargs['user'] = self.request.user.id
+        kwargs['book'] = self.request.GET.get('id_book')
         return kwargs
 
-
-
-# @login_required
-# def add_comment(request, pk):
-#     if request.method == 'POST':
-#         cf = CommentsForm(request.POST)
-#         if cf.is_valid():
-#             content = request.POST.get('comment_added')
-#             rate = request.POST.get('rating')
-#             instance_comment = Comments()
-#             instance_comment.comment_added = content
-#             instance_comment.rating = rate
-#             instance_comment.user_id = request.user.id
-#             instance_comment.book_id = pk
-#             instance_comment.save()
-#             return redirect('catalog:home')
-#         else:
-#             cf = CommentsForm()
-#         context = {
-#             'comment_form': cf,
-#         }
-#         return context
-
-
-
+    def form_valid(self, form):
+        catalog = form.save(commit=False)
+        catalog.user_id = self.request.user.id
+        catalog.book_id = self.request.GET.get('id_book')
+        catalog.save()
+        return redirect('catalog:home')
 
 
 

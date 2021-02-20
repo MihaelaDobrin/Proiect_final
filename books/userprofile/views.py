@@ -12,6 +12,7 @@ from django.urls import reverse
 from django.views.generic import UpdateView, CreateView
 
 from userprofile.forms import NewAccountForm
+
 punctuation = '!$@?$@'
 
 class UpdateProfile(LoginRequiredMixin, UpdateView):

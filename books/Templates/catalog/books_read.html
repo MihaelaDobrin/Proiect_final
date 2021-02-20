@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+<br>
+<div>
+    Books read:
+</div>
 <ul>
     {% for item in books_read %}
         <li>

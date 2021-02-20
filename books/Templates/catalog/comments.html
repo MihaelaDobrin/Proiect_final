@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 <ul>
     {% for item in all_comments %}
         <li>
-            {{ item.comment_added}} by {{ item.user.username }}
+            {{ item.comment_added}} with {{item.rating}} by {{ item.user.username }}
         </li>
     {% endfor %}
-    <a> Add a comment </a>
-
 </ul>
 {% endblock %}

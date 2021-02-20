@@ -47,9 +47,29 @@ class CommentsForm(forms.ModelForm):
             'rating': Select(attrs={'placeholder': 'Stars', 'class': 'form-control'}),
         }
 
-    def __init__(self, pk, *args, **kwargs):
+    def __init__(self, pk, book, user, *args, **kwargs):
         super(CommentsForm, self).__init__(*args, **kwargs)
         self.pk = pk
+        self.book = book
+        self.user = user
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        comment_val =cleaned_data.get('comment_added')
+        rating_val =cleaned_data.get('rating')
+        if Comments.objects.filter(user_id=self.user).exists():
+            msg = 'Userul a postat deja un comentariu pentru aceasta carte'
+            self.errors['comment_added']=self.error_class([msg])
+        elif comment_val is None:
+            msg = 'Userul nu a completat'
+            self.errors['comment_added'] = self.error_class([msg])
+        elif rating_val is None:
+            msg = 'Userul nu a completat'
+            self.errors['rating'] = self.error_class([msg])
+
+        return cleaned_data
+
+
 
 
 
