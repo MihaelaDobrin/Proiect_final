@@ -1,12 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import request
+from django.http import request, HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView
+import xlwt
+import datetime
+import json
 
 from catalog.forms import BooksForm, CommentsForm
 from catalog.models import Book, Book_read, Comments
@@ -102,6 +105,60 @@ class AddComment(LoginRequiredMixin, CreateView):
         catalog.book_id = self.request.GET.get('id_book')
         catalog.save()
         return redirect('catalog:home')
+
+def book_export(request):
+    # data_source = {}
+    # data_source['title'] = []
+    # data_source['author'] = []
+    # data_source['category'] = []
+    # data_source['publishing_house'] = []
+    if request.user.is_superuser == 1:
+        data_book = Book.objects.all()
+        # list_title = []
+        # list_author = []
+        # list_category = []
+        # list_publishing_house = []
+        list_data = []
+        for item in data_book:
+            list_work = []
+            list_work.append(item.title)
+            list_work.append(item.author)
+            list_work.append(item.category)
+            list_work.append(item.publishing_house)
+            list_data.append(list_work)
+            # list_title.append(item.title)
+            # list_author.append(item.author)
+            # list_category.append(item.category)
+            # list_publishing_house.append(item.publishing_house)
+        # data_source['title'] = list_title
+        # data_source['author'] = list_author
+        # data_source['category'] = list_category
+        # data_source['publishing_house'] = list_publishing_house
+        response = HttpResponse (content_type = 'application/ms-excel')
+        filename = 'List of books_{}.xls'
+        content = "attachment; filename =%s" % filename
+        response['Content-Disposition'] = content
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('List of books_')
+        row_num = 0
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+        # columns = [key for key in data_source]
+        columns = ['title', 'author', 'category', 'publishing_house']
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+        font_style = xlwt.XFStyle()
+        for row in range (len(list_data)):
+            row_num += 1
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num,list_data[row][col_num], font_style)
+        wb.save(response)
+        return response
+    else:
+        return redirect('catalog:home')
+
+
+
 
 
 

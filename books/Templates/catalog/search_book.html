@@ -4,7 +4,7 @@
 <ul>
     {% for item in book_list %}
         <li>
-            {{ item.title }} by {{ item.author }}
+            {{ item.title }} by {{ item.author }} published by {{item.publishing_house}}
         </li>
     {% endfor %}
 </ul>

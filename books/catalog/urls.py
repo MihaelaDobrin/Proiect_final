@@ -13,5 +13,6 @@ urlpatterns =[
     path('add_book_read/<int:pk>', views.createBookRead, name='add_read'),
     path('comments/', views.ShowComments.as_view(), name='list_comments'),
     path('add_new_comment/', views.AddComment.as_view(), name='add_comments'),
+    path('export_data/', views.book_export, name='export'),
 
 ]

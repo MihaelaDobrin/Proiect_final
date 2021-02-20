@@ -8,8 +8,17 @@
     <input name="q" type="text" placeholder="Search">
     </form>
 </nav>
-    <a href="{% url 'catalog:add' %}" class="btn btn-danger"> Add </a>
+<div>
+    <a href="{% url 'catalog:add' %}" class="search_text"> Add </a>
+    <br>
+    {% if request.user.is_authenticated == True %}
+    <a href="{% url 'catalog:export' %}" class="search_text"> Export </a>
+    {% else %}
+        <a href="#" class="nav-link disabled" > Export </a>
+    {% endif %}
+</div>
 
+<br>
 {% endif %}
 
 <table class="table table-hover table-bordered">

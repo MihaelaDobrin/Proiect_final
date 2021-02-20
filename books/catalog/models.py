@@ -16,7 +16,7 @@ class Book(models.Model):
     publishing_house =models.CharField(max_length=100, choices=publishing_choices)
 
     def __str__(self):
-        return f'{self.title} de {self.author} '
+        return f'{self.title} de {self.author}'
 
 
 class Book_read(models.Model):
