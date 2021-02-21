@@ -1,5 +1,13 @@
-.search_text{
-  text-align: left;
-  position: absolute;
+.text_read{
+  text-align: center;
   color: red;
+  text-shadow: 2px 2px;
+  font-size:30px;
   }
+
+.text_add{
+    text-align: right;
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}

@@ -8,11 +8,11 @@
     <input name="q" type="text" placeholder="Search">
     </form>
 </nav>
-<div>
-    <a href="{% url 'catalog:add' %}" class="search_text"> Add </a>
+<div class="text_add">
+    <a href="{% url 'catalog:add' %}" > Add </a>
     <br>
     {% if request.user.is_authenticated == True %}
-    <a href="{% url 'catalog:export' %}" class="search_text"> Export </a>
+    <a href="{% url 'catalog:export' %}" > Export </a>
     {% else %}
         <a href="#" class="nav-link disabled" > Export </a>
     {% endif %}
