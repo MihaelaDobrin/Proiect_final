@@ -14,5 +14,7 @@ urlpatterns =[
     path('comments/', views.ShowComments.as_view(), name='list_comments'),
     path('add_new_comment/', views.AddComment.as_view(), name='add_comments'),
     path('export_data/', views.book_export, name='export'),
+    path('delete/<int:pk>/', views.delete_book, name='book_delete'),
+    path('delete_com/<int:pk>', views.delete_comment, name='comment_delete'),
 
 ]

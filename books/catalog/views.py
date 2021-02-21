@@ -21,6 +21,11 @@ class HomeIndex(ListView):
     template_name = 'catalog/catalog_index.html'
     context_object_name = 'all_books'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        data = super(HomeIndex, self).get_context_data()
+        data['all_books'] = Book.objects.filter(active=1)
+        return data
+
 
 class CreateBookIndexView(LoginRequiredMixin, CreateView):
     model = Book
@@ -57,13 +62,25 @@ class SearchResultsView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        book_list = Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))
+        book_list = Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query)).filter(active=1)
         return book_list
+
+
+def delete_book(request, pk):
+    Book.objects.filter(id=pk).update(active=0)
+    return redirect('catalog:home')
+
 
 class ListBookRead(LoginRequiredMixin, ListView):
     model = Book_read
     template_name = 'catalog/books_read.html'
     context_object_name = 'books_read'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        data = super(ListBookRead, self).get_context_data()
+        data['books_read'] = Book_read.objects.filter(user_id=self.request.user.id)
+        return data
+
 
 @login_required
 def createBookRead(request, pk):
@@ -83,7 +100,7 @@ class ShowComments(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ShowComments, self).get_context_data(**kwargs)
-        context['all_comments'] = Comments.objects.filter(book_id=self.request.GET.get('id_book'))
+        context['all_comments'] = Comments.objects.filter(book_id=self.request.GET.get('id_book')).filter(active=1)
         return context
 
 
@@ -105,6 +122,12 @@ class AddComment(LoginRequiredMixin, CreateView):
         catalog.book_id = self.request.GET.get('id_book')
         catalog.save()
         return redirect('catalog:home')
+
+
+def delete_comment(request, pk):
+    Comments.objects.filter(id=pk).update(active=0)
+    return redirect('catalog:list_comments')
+
 
 def book_export(request):
     if request.user.is_superuser == 1:

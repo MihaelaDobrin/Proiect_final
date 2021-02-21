@@ -57,7 +57,7 @@ class CommentsForm(forms.ModelForm):
         cleaned_data = self.cleaned_data
         comment_val =cleaned_data.get('comment_added')
         rating_val =cleaned_data.get('rating')
-        if Comments.objects.filter(user_id=self.user).exists():
+        if Comments.objects.filter(user_id=self.user, book_id=self.book, active=1).exists():
             msg = 'Userul a postat deja un comentariu pentru aceasta carte'
             self.errors['comment_added']=self.error_class([msg])
         elif comment_val is None:

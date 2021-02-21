@@ -14,6 +14,7 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     category = models.CharField(max_length=30, choices=category_choices)
     publishing_house =models.CharField(max_length=100, choices=publishing_choices)
+    active = models.CharField(default=1, max_length=2)
 
     def __str__(self):
         return f'{self.title} de {self.author}'
@@ -35,6 +36,7 @@ class Comments(models.Model):
     rating = models.CharField(max_length=20, choices=rating_choices)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    active = models.CharField(default=1, max_length=2)
 
     def __str__(self):
         return f'{self.comment_added} - {self.rating} added by {self.user.username}'

@@ -19,7 +19,11 @@
                 <td> {{ item.category}}</td>
                 <td> {{ item.publishing_house}}</td>
             <tr/>
+    {% empty %}
+        <tr>
+            <p class="text_search" > Nu s-a gasit nicio carte. </p>
+        </tr>
         {% endfor %}
     </tbody>
-
+</table>
 {% endblock %}

@@ -8,6 +8,7 @@
             <th>Comment</th>
             <th>Left by </th>
             <th>Rating</th>
+            <th>Actions</th>
         </thead>
         <tbody>
          {% for item in all_comments %}
@@ -15,6 +16,13 @@
                 <td> {{ item.comment_added }}</td>
                 <td> {{ item.user.first_name }}</td>
                 <td> {{ item.rating}}</td>
+                <td>
+                    {% if request.user.is_superuser == 1 %}
+                    <a href="{% url 'catalog:comment_delete' item.id %}"> Delete </a>
+                    {% else %}
+                    <a href="#" class="nav-link disabled" > Delete </a>
+                    {% endif %}
+                </td>
             </tr>
          {% endfor %}
         </tbody>

@@ -35,6 +35,7 @@
         </thead>
         <tbody>
         {% for item in all_books %}
+        {% if item.active == '1' %}
         <tr>
             <td>{{ forloop.counter }}.</td>
             <td> {{ item.title }}</td>
@@ -43,6 +44,12 @@
             <td> {{ item.publishing_house}}</td>
             {% if request.user.is_authenticated == True %}
                 <td> <a href="{% url 'catalog:change' item.id %}"> Edit</a> </td>
+                <td>
+                    {% if request.user.is_superuser == 1 %}
+                    <a href="{% url 'catalog:book_delete' item.id %}"> Delete </a> </td>
+                    {% else %}
+                    <a href="#" class="nav-link disabled"> Delete </a>
+                    {% endif %}
                 <td>
                     {% if item.id|check_books:request.user.id is False%}
                     <a href="{% url 'catalog:add_read' item.id %}"> Add to list </a>
@@ -54,6 +61,7 @@
                 <td> <a href="{% url 'catalog:add_comments'%}?id_book={{ item.id }}"> Add a comment  </a> </td>
             {% endif %}
         </tr>
+        {% endif %}
         {% endfor %}
         </tbody>
     </table>
