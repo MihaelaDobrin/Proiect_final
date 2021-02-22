@@ -82,7 +82,7 @@ class ListBookRead(LoginRequiredMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         data = super(ListBookRead, self).get_context_data()
-        data['books_read'] = Book_read.objects.filter(user_id=self.request.user.id).filter(active=1)
+        data['books_read'] = Book_read.objects.filter(user_id=self.request.user.id, active=1)
         return data
 
 
@@ -104,7 +104,7 @@ class ShowComments(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ShowComments, self).get_context_data(**kwargs)
-        context['all_comments'] = Comments.objects.filter(book_id=self.request.GET.get('id_book')).filter(active=1)
+        context['all_comments'] = Comments.objects.filter(book_id=self.request.GET.get('id_book'), active=1)
         return context
 
 
