@@ -22,6 +22,9 @@
                 <td> {{ item.book.author }}</td>
                 <td> {{ item.book.category}}</td>
                 <td> {{ item.book.publishing_house}}</td>
+                 <td>
+                    <a href="{% url 'catalog:read_delete' item.id %}"> Delete </a>
+                </td>
             <tr/>
         {% endif %}
         {% endfor %}

@@ -16,5 +16,6 @@ urlpatterns =[
     path('export_data/', views.book_export, name='export'),
     path('delete/<int:pk>/', views.delete_book, name='book_delete'),
     path('delete_com/<int:pk>', views.delete_comment, name='comment_delete'),
+    path('del_read/<int:pk>', views.delete_read, name='read_delete'),
 
 ]

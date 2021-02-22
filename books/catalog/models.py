@@ -6,8 +6,8 @@ from django.db import models
 
 class Book(models.Model):
 
-    category_choices = (('Literatura', 'Literatura'), ('Economie', 'Economie'), ('Dezvoltare personala', 'Dezvoltare personala'))
-    publishing_choices = (('Litera', 'Litera'), ('Nemira', 'Nemira'), ('Curtea Veche', 'Curtea veche'))
+    category_choices = (('Literatura', 'Literatura'), ('Economie', 'Economie'), ('Dezvoltare personala', 'Dezvoltare personala'), ('Carti pentru copii', 'Carti pentru copii'))
+    publishing_choices = (('Litera', 'Litera'), ('Nemira', 'Nemira'), ('Curtea Veche', 'Curtea veche'), ('RAO', 'RAO'))
 
 
     title = models.CharField(max_length=100)
@@ -23,6 +23,7 @@ class Book(models.Model):
 class Book_read(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    active = models.CharField(default=1, max_length=2)
 
     def __str__(self):
         return f'{self.book.title}'

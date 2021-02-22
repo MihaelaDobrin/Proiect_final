@@ -71,6 +71,10 @@ def delete_book(request, pk):
     return redirect('catalog:home')
 
 
+def delete_read(request, pk):
+    Book_read.objects.filter(id=pk).update(active=0)
+    return redirect('catalog:home')
+
 class ListBookRead(LoginRequiredMixin, ListView):
     model = Book_read
     template_name = 'catalog/books_read.html'
@@ -78,7 +82,7 @@ class ListBookRead(LoginRequiredMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         data = super(ListBookRead, self).get_context_data()
-        data['books_read'] = Book_read.objects.filter(user_id=self.request.user.id)
+        data['books_read'] = Book_read.objects.filter(user_id=self.request.user.id).filter(active=1)
         return data
 
 
