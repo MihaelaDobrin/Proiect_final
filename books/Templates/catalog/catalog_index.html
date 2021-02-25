@@ -3,11 +3,12 @@
 {% block content %}
 {% load static %}
 {% if request.user.is_authenticated == True %}
-<nav class="navbar navbar-expand-sm bg-light navbar-light">
+<br>
+<div>
     <form action="{% url 'catalog:search' %}" method="get">
     <input name="q" type="text" placeholder="Search">
     </form>
-</nav>
+</div>
 <div class="text_add">
     <a href="{% url 'catalog:add' %}" > Add </a>
     <br>
@@ -22,21 +23,21 @@
 {% endif %}
 
 <table class="table table-hover table-bordered">
-        <thead>
+        <thead style="font-weight: bold; font-size:20px">
             <th></th>
             <th>Title</th>
             <th>Author</th>
             <th>Category</th>
             <th>Publishing_house</th>
             {% if request.user.is_authenticated == True %}
-                <th>Actions</th>
+            <th> </th>
             {% endif %}
 
         </thead>
-        <tbody>
+        <tbody >
         {% for item in all_books %}
         {% if item.active == '1' %}
-        <tr>
+        <tr style="font-weight:bold; font-color:green;">
             <td>{{ forloop.counter }}.</td>
             <td> {{ item.title }}</td>
             <td> {{ item.author }}</td>

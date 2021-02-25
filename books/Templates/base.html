@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
-<body class="about-us" style="background-color: #d5f4e6">
+<body class="about-us" style="background-image: url('../static/Pictures/05.png');background-color: #c4a2a2ad;">
 <nav class="navbar navbar-expand-lg fixed-top navbar-transparent nav-down" color-on-scroll="200">
-    <div class="container">
+    <div class="container" >
         <div class="navbar-translate">
             <div class="navbar-header">
             </div>
@@ -41,7 +41,7 @@
 
                     {% if request.user.is_authenticated == True %}
                     <li  class="nav-item">
-                        <a href="{% url 'userprofile:update_profile' request.user.id %}" class="nav-link" style="color:blue">{{request.user.first_name}} </a>
+                        <a href="{% url 'userprofile:update_profile' request.user.id %}" class="nav-link" style="color:blue;">{{request.user.first_name}} </a>
                     </li>
                     {% endif %}
                     {% if request.user.is_authenticated == False %}
@@ -51,7 +51,6 @@
                         </a>
                     </li>
                     {%  endif %}
-                    <li class="nav-item">
                         <a href="{% url 'userprofile:new_account' %}" class="nav-link">
                             Sign Up
                         </a>
@@ -67,7 +66,7 @@
             </div>
     </div>
 </nav>
-<div class="page-header page-header-small">
+<div class="page-header page-header-small" >
     <div class="filter filter-danger"></div>
     <div class="content-center">
         <div class="container">

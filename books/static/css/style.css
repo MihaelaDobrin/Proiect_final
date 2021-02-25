@@ -18,3 +18,11 @@
     font-weight: bold;
     font-size: 20px;
 }
+
+.sign_up_text{
+  text-align: center;
+  width: 320px;
+  padding: 10px;
+  border: 5px solid green;
+  margin: 0;
+}
