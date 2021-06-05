@@ -4,7 +4,7 @@ import string
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
-from django.shortcuts import render
+
 
 # Create your views here.
 from django.template.loader import render_to_string
@@ -15,6 +15,7 @@ from userprofile.forms import NewAccountForm
 
 punctuation = '!$@?$@'
 
+
 class UpdateProfile(LoginRequiredMixin, UpdateView):
     form_class = NewAccountForm
     model = User
@@ -22,7 +23,6 @@ class UpdateProfile(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return User.objects.filter(id=self.request.user.id)
-
 
     def get_form_kwargs(self):
         kwargs = super(UpdateProfile, self).get_form_kwargs()

@@ -8,12 +8,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView
 import xlwt
-import datetime
-import json
+
 
 from catalog.forms import BooksForm, CommentsForm
 from catalog.models import Book, Book_read, Comments
-import pandas as pd
 
 
 class HomeIndex(ListView):

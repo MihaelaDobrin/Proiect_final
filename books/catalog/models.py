@@ -6,7 +6,9 @@ from django.db import models
 
 class Book(models.Model):
 
-    category_choices = (('Literatura', 'Literatura'), ('Economie', 'Economie'), ('Dezvoltare personala', 'Dezvoltare personala'), ('Carti pentru copii', 'Carti pentru copii'))
+    category_choices = (('Literatura', 'Literatura'), ('Economie', 'Economie'),
+                        ('Dezvoltare personala', 'Dezvoltare personala'),
+                        ('Carti pentru copii', 'Carti pentru copii'))
     publishing_choices = (('Litera', 'Litera'), ('Nemira', 'Nemira'), ('Curtea Veche', 'Curtea veche'), ('RAO', 'RAO'))
 
 
@@ -41,3 +43,4 @@ class Comments(models.Model):
 
     def __str__(self):
         return f'{self.comment_added} - {self.rating} added by {self.user.username}'
+

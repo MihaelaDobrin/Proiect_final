@@ -32,7 +32,6 @@ class BooksForm(forms.ModelForm):
             if Book.objects.filter(title=title_val, author=author_val).exists():
                 msg = "Book already exists"
                 self.errors['title']=self.error_class([msg])
-
         return cleaned_data
 
 
